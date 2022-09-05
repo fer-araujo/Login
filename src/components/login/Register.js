@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { USER_REGEX, EMAIL_REGEX, PWD_REGEX } from "../../constants/Constants";
 import uuid4 from "uuid4";
+import { FcCheckmark, FcHighPriority } from "react-icons/fc";
+import "./Login.scss";
 
 const Register = () => {
   const usernameRef = useRef();
@@ -41,7 +43,7 @@ const Register = () => {
       setErrorMsg("");
     } else {
       setNameValidation(false);
-      setErrorMsg("Invalid Username");
+      username !== "" ? setErrorMsg("Invalid Username") : setErrorMsg("");
     }
   }, [username]);
 
@@ -52,7 +54,7 @@ const Register = () => {
       setErrorMsg("");
     } else {
       setEmailValidation(false);
-      setErrorMsg("Invalid Email");
+      email !== "" ? setErrorMsg("Invalid Email") : setErrorMsg("");
     }
   }, [email]);
 
@@ -72,12 +74,13 @@ const Register = () => {
   }, [password, matchPass]);
 
   useEffect(() => {
-    if(user !== null) {
-        setData([...data, user]);
-        localStorage.setItem("users", JSON.stringify([...data, user]));
+    if (user !== null) {
+      setData([...data, user]);
+      localStorage.setItem("users", JSON.stringify([...data, user]));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,154 +107,158 @@ const Register = () => {
 
   return (
     <>
-      <div>
+      <form className="App__form-register" onSubmit={handleSubmit}>
+       
+        <h1>Register</h1>
+
         <p
           ref={errorRef}
-          className={errorMsg ? "app__error-msg" : "app__offscreen"}
+          className={errorMsg ? "App__error" : "App__offscreen"}
           aria-live="assertive"
         >
           {errorMsg}
         </p>
-        <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
-          {/* username input*/}
-          <label htmlFor="username">
-            Username:
-            {nameValidation ? <span>check icon</span> : ""}
-            {nameValidation || !username ? "" : <span>times icon</span>}
-          </label>
-          <input
-            type="text"
-            id="username"
-            ref={usernameRef}
-            onChange={(e) => setUsername(e.target.value)}
-            aria-invalid={nameValidation ? "false" : "true"}
-            aria-describedby="uidnote"
-            onFocus={() => setNameFocus(true)}
-            onBlur={() => setNameFocus(false)}
-            value={username ? username : ""}
-            required
-          />
-          <p
-            id="uidnote"
-            className={
-              nameFocus && username && !nameValidation
-                ? "app__instructions"
-                : "app__offscreen"
-            }
-          >
-            - The username should have a minimum of 4 characters. <br />
-            - Must begin with a letter. <br />
-            - Letters, numbers, hyphens and underscores allowed. <br />- Avoid
-            special characters.
-          </p>
 
-          {/* email input*/}
-          <label htmlFor="email">
-            Email:
-            {emailValidation ? <span>check icon</span> : ""}
-            {emailValidation || !email ? "" : <span>times icon</span>}
-          </label>
-          <input
-            type="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={emailValidation ? "false" : "true"}
-            aria-describedby="emailnote"
-            onFocus={() => setEmailFocus(true)}
-            onBlur={() => setEmailFocus(false)}
-            value={email ? email : ""}
-            required
-          />
-          <p
-            id="emailnote"
-            className={
-              emailFocus && email && !emailValidation
-                ? "app__instructions"
-                : "app__offscreen"
-            }
-          >
-            - Avoid blank spaces.
-          </p>
+        {/* username input*/}
+        <label htmlFor="username" className="App__form-label">
+          Username:
+          {nameValidation ? <FcCheckmark /> : ""}
+          {nameValidation || !username ? "" : <FcHighPriority />}
+        </label>
+        <input
+          type="text"
+          id="username"
+          ref={usernameRef}
+          className="App__form-input"
+          onChange={(e) => setUsername(e.target.value)}
+          aria-invalid={nameValidation ? "false" : "true"}
+          aria-describedby="uidnote"
+          onFocus={() => setNameFocus(true)}
+          onBlur={() => setNameFocus(false)}
+          value={username ? username : ""}
+          required
+        />
+        <p
+          id="uidnote"
+          className={
+            nameFocus && username && !nameValidation
+              ? "App__instructions"
+              : "App__offscreen"
+          }
+        >
+          - The username should have a minimum of 4 characters. <br />
+          - Must begin with a letter. <br />
+          - Letters, numbers, hyphens and underscores allowed. <br />- Avoid
+          special characters.
+        </p>
 
-          {/* password input*/}
-          <label htmlFor="password">
-            Password:
-            {passwordValidation ? <span>check icon</span> : ""}
-            {passwordValidation || !password ? "" : <span>times icon</span>}
-          </label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            aria-invalid={passwordValidation ? "false" : "true"}
-            aria-describedby="pwdnote"
-            onFocus={() => setPasswordFocus(true)}
-            onBlur={() => setPasswordFocus(false)}
-            value={password ? password : ""}
-            required
-          />
-          <p
-            id="pwdnote"
-            className={
-              passwordFocus && password && !passwordValidation
-                ? "app__instructions"
-                : "app__offscreen"
-            }
-          >
-            - The password should have a minimum of 8 characters. <br />
-            - Should have at least one capital letter. <br />
-            - Should have at least one lowercase letter. <br />
-            - Should have at least one number. <br />- Should have at least one
-            special character.
-          </p>
+        {/* email input*/}
+        <label htmlFor="email"  className="App__form-label">
+          Email:
+          {emailValidation ? <FcCheckmark /> : ""}
+          {emailValidation || !email ? "" : <FcHighPriority />}
+        </label>
+        <input
+          type="email"
+          id="email"
+          className="App__form-input"
+          onChange={(e) => setEmail(e.target.value)}
+          aria-invalid={emailValidation ? "false" : "true"}
+          aria-describedby="emailnote"
+          onFocus={() => setEmailFocus(true)}
+          onBlur={() => setEmailFocus(false)}
+          value={email ? email : ""}
+          required
+        />
+        <p
+          id="emailnote"
+          className={
+            emailFocus && email && !emailValidation
+              ? "App__instructions"
+              : "App__offscreen"
+          }
+        >
+          - Avoid blank spaces.
+        </p>
 
-          {/* match password input*/}
-          <label htmlFor="match">
-            Confirm Password:
-            {matchValidation ? <span>check icon</span> : ""}
-            {matchValidation || !matchPass ? "" : <span>times icon</span>}
-          </label>
-          <input
-            type="password"
-            id="match"
-            onChange={(e) => setMatchPass(e.target.value)}
-            aria-invalid={matchValidation ? "false" : "true"}
-            aria-describedby="matchnote"
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-            value={matchPass ? matchPass : ""}
-            required
-          />
-          <p
-            id="matchnote"
-            className={
-              matchFocus && matchPass && !matchValidation
-                ? "app__instructions"
-                : "app__offscreen"
-            }
-          >
-            - Must match the password
-          </p>
+        {/* password input*/}
+        <label htmlFor="password"  className="App__form-label">
+          Password:
+          {passwordValidation ? <FcCheckmark /> : ""}
+          {passwordValidation || !password ? "" : <FcHighPriority />}
+        </label>
+        <input
+          type="password"
+          id="password"
+          className="App__form-input"
+          onChange={(e) => setPassword(e.target.value)}
+          aria-invalid={passwordValidation ? "false" : "true"}
+          aria-describedby="pwdnote"
+          onFocus={() => setPasswordFocus(true)}
+          onBlur={() => setPasswordFocus(false)}
+          value={password ? password : ""}
+          required
+        />
+        <p
+          id="pwdnote"
+          className={
+            passwordFocus && password && !passwordValidation
+              ? "App__instructions"
+              : "App__offscreen"
+          }
+        >
+          - The password should have a minimum of 8 characters. <br />
+          - Should have at least one capital letter. <br />
+          - Should have at least one lowercase letter. <br />
+          - Should have at least one number. <br />- Should have at least one
+          special character.
+        </p>
 
-          <button
-            disabled={
-              !nameValidation || !passwordValidation || !matchValidation
-                ? true
-                : false
-            }
-          >
-            Sign Up
-          </button>
-        </form>
+        {/* match password input*/}
+        <label htmlFor="match"  className="App__form-label">
+          Confirm Password:
+          {matchValidation ? <FcCheckmark /> : ""}
+          {matchValidation || !matchPass ? "" : <FcHighPriority />}
+        </label>
+        <input
+          type="password"
+          id="match"
+          className="App__form-input"
+          onChange={(e) => setMatchPass(e.target.value)}
+          aria-invalid={matchValidation ? "false" : "true"}
+          aria-describedby="matchnote"
+          onFocus={() => setMatchFocus(true)}
+          onBlur={() => setMatchFocus(false)}
+          value={matchPass ? matchPass : ""}
+          required
+        />
+        <p
+          id="matchnote"
+          className={
+            matchFocus && matchPass && !matchValidation
+              ? "App__instructions"
+              : "App__offscreen"
+          }
+        >
+          - Must match the password
+        </p>
+
+        <button
+          className="App__form-button"
+          disabled={
+            !nameValidation || !passwordValidation || !matchValidation
+              ? true
+              : false
+          }
+        >
+          Sign Up
+        </button>
         {valid && (
-          <p className="app__valid-msg" aria-live="assertive">
+          <p className="App__valid-msg" aria-live="assertive">
             Register completed successfully!
           </p>
         )}
-        {/* CHANGE AFTER ADDING ALL THE CLASSES */}
-        <p>Sign In</p>
-      </div>
+      </form>
     </>
   );
 };
