@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { USER_REGEX, PWD_REGEX } from "../../constants/Constants";
 import { FcCheckmark, FcHighPriority } from "react-icons/fc";
-import "./Login.scss";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Register = () => {
   const usernameLoginRef = useRef();
   const errorRef = useRef();
+  const history = useNavigate();
 
   const [username, setUsername] = useState("");
   const [nameValidation, setNameValidation] = useState(false);
@@ -16,7 +18,6 @@ const Register = () => {
   const [passwordFocus, setPasswordFocus] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState("");
-  const [valid, setValid] = useState(false);
 
   //We will test that the username is valid
   useEffect(() => {
@@ -46,36 +47,44 @@ const Register = () => {
     const usersArr = localStorage.getItem("users");
     if (usersArr && usersArr.length) {
       const userData = JSON.parse(usersArr);
-      const userLogin = userData.filter((user, key) => {
+      const userLogin = userData.filter((user) => {
         return user.username === username && user.password === password;
       });
-
       if (userLogin.length > 0) {
-        console.log("user login successfully!");
-        localStorage.setItem("u__uuid", userLogin.id);
-        localStorage.setItem("u__username", userLogin.username);
-        localStorage.setItem("u__email", userLogin.email);
-        setValid(true);
+        localStorage.setItem("u__uuid", userLogin[0].id);
+        localStorage.setItem("u__username", userLogin[0].username);
+        localStorage.setItem("u__name", userLogin[0].name);
+        localStorage.setItem("u__email", userLogin[0].email);
+        localStorage.setItem("u__date", userLogin[0].date);
+
         setUsername("");
         setPassword("");
-        setTimeout(() => {
-          setValid(false);
-        }, 3000);
+        history("/home");
       } else {
         setErrorMsg("Invalid username or password");
+
+        setTimeout(() => {
+          setUsername("");
+          setPassword("");
+        }, 2000);
+      }
+    } else {
+      setErrorMsg("Invalid username or password");
+
+      setTimeout(() => {
         setUsername("");
         setPassword("");
-        setTimeout(() => {
-          setErrorMsg("");
-        }, 3000);
-      }
+      }, 2000);
     }
   };
 
   return (
     <>
-      <form className="App__form-login" onSubmit={handleSubmit}>
-        
+      <form
+        className="App__form-login"
+        onSubmit={handleSubmit}
+        autoComplete="off"
+      >
         <h1>Login</h1>
         <p
           ref={errorRef}
@@ -153,11 +162,6 @@ const Register = () => {
         >
           Login
         </button>
-        {valid && (
-          <p className="App__valid-msg" aria-live="assertive">
-            Login successfully!
-          </p>
-        )}
       </form>
     </>
   );

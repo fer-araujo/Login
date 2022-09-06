@@ -1,14 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
-import { USER_REGEX, EMAIL_REGEX, PWD_REGEX } from "../../constants/Constants";
+import {
+  USER_REGEX,
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PWD_REGEX,
+} from "../../constants/Constants";
 import uuid4 from "uuid4";
 import { FcCheckmark, FcHighPriority } from "react-icons/fc";
-import "./Login.scss";
+import "./Login.css";
 
 const Register = () => {
   const usernameRef = useRef();
   const errorRef = useRef();
 
   const [username, setUsername] = useState("");
+  const [usernameValidation, setUsernameValidation] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
+
+  const [name, setName] = useState("");
   const [nameValidation, setNameValidation] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
 
@@ -39,13 +48,24 @@ const Register = () => {
   //We will test that the username is valid
   useEffect(() => {
     if (USER_REGEX.test(username)) {
+      setUsernameValidation(true);
+      setErrorMsg("");
+    } else {
+      setUsernameValidation(false);
+      username !== "" ? setErrorMsg("Invalid Username") : setErrorMsg("");
+    }
+  }, [username]);
+
+  //We will test that the name is valid
+  useEffect(() => {
+    if (NAME_REGEX.test(name)) {
       setNameValidation(true);
       setErrorMsg("");
     } else {
       setNameValidation(false);
-      username !== "" ? setErrorMsg("Invalid Username") : setErrorMsg("");
+      name !== "" ? setErrorMsg("Invalid Name") : setErrorMsg("");
     }
-  }, [username]);
+  }, [name]);
 
   //We will test that the email is valid
   useEffect(() => {
@@ -81,22 +101,44 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setUser(() => {
-      return {
-        ...user,
-        id: uuid4(),
-        username: username,
-        email: email,
-        password: password,
-      };
-    });
+    const usersArr = localStorage.getItem("users");
+    if (usersArr && usersArr.length) {
+      setUser(() => {
+        const date = new Date().toISOString().slice(0, 10);
+        const tempObj = {
+          ...user,
+          usersArr,
+        };
+        return {
+          ...tempObj,
+          id: uuid4(),
+          username: username,
+          name: name,
+          email: email,
+          password: password,
+          date: date,
+        };
+      });
+    } else {
+      setUser(() => {
+        const date = new Date().toISOString().slice(0, 10);
+        return {
+          ...user,
+          id: uuid4(),
+          username: username,
+          name: name,
+          email: email,
+          password: password,
+          date: date,
+        };
+      });
+    }
 
     setValid(true);
     setUsername("");
+    setName("");
     setEmail("");
     setPassword("");
     setMatchPass("");
@@ -107,8 +149,11 @@ const Register = () => {
 
   return (
     <>
-      <form className="App__form-register" onSubmit={handleSubmit}>
-       
+      <form
+        className="App__form-register"
+        onSubmit={handleSubmit}
+        autoComplete="off"
+      >
         <h1>Register</h1>
 
         <p
@@ -122,8 +167,8 @@ const Register = () => {
         {/* username input*/}
         <label htmlFor="username" className="App__form-label">
           Username:
-          {nameValidation ? <FcCheckmark /> : ""}
-          {nameValidation || !username ? "" : <FcHighPriority />}
+          {usernameValidation ? <FcCheckmark /> : ""}
+          {usernameValidation || !username ? "" : <FcHighPriority />}
         </label>
         <input
           type="text"
@@ -131,17 +176,17 @@ const Register = () => {
           ref={usernameRef}
           className="App__form-input"
           onChange={(e) => setUsername(e.target.value)}
-          aria-invalid={nameValidation ? "false" : "true"}
+          aria-invalid={usernameValidation ? "false" : "true"}
           aria-describedby="uidnote"
-          onFocus={() => setNameFocus(true)}
-          onBlur={() => setNameFocus(false)}
+          onFocus={() => setUsernameFocus(true)}
+          onBlur={() => setUsernameFocus(false)}
           value={username ? username : ""}
           required
         />
         <p
           id="uidnote"
           className={
-            nameFocus && username && !nameValidation
+            usernameFocus && username && !usernameValidation
               ? "App__instructions"
               : "App__offscreen"
           }
@@ -152,8 +197,38 @@ const Register = () => {
           special characters.
         </p>
 
+        {/* name input*/}
+        <label htmlFor="name" className="App__form-label">
+          Name:
+          {nameValidation ? <FcCheckmark /> : ""}
+          {nameValidation || !name ? "" : <FcHighPriority />}
+        </label>
+        <input
+          type="text"
+          id="name"
+          className="App__form-input"
+          onChange={(e) => setName(e.target.value)}
+          aria-invalid={usernameValidation ? "false" : "true"}
+          aria-describedby="namenote"
+          onFocus={() => setNameFocus(true)}
+          onBlur={() => setNameFocus(false)}
+          value={name ? name : ""}
+          required
+        />
+        <p
+          id="namenote"
+          className={
+            nameFocus && name && !nameValidation
+              ? "App__instructions"
+              : "App__offscreen"
+          }
+        >
+          - The name should have a minimum of 2 characters. <br />
+          - Must begin with a letter. <br />- Avoid special characters.
+        </p>
+
         {/* email input*/}
-        <label htmlFor="email"  className="App__form-label">
+        <label htmlFor="email" className="App__form-label">
           Email:
           {emailValidation ? <FcCheckmark /> : ""}
           {emailValidation || !email ? "" : <FcHighPriority />}
@@ -182,7 +257,7 @@ const Register = () => {
         </p>
 
         {/* password input*/}
-        <label htmlFor="password"  className="App__form-label">
+        <label htmlFor="password" className="App__form-label">
           Password:
           {passwordValidation ? <FcCheckmark /> : ""}
           {passwordValidation || !password ? "" : <FcHighPriority />}
@@ -215,7 +290,7 @@ const Register = () => {
         </p>
 
         {/* match password input*/}
-        <label htmlFor="match"  className="App__form-label">
+        <label htmlFor="match" className="App__form-label">
           Confirm Password:
           {matchValidation ? <FcCheckmark /> : ""}
           {matchValidation || !matchPass ? "" : <FcHighPriority />}
@@ -246,7 +321,7 @@ const Register = () => {
         <button
           className="App__form-button"
           disabled={
-            !nameValidation || !passwordValidation || !matchValidation
+            !usernameValidation || !passwordValidation || !matchValidation
               ? true
               : false
           }

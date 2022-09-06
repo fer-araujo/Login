@@ -3,7 +3,7 @@ import Register from "./Register";
 import Login from "./Login";
 import login from "../../assets/Mobile-login-RED.png";
 import register from "../../assets/Registro-2.png";
-import "./Login.scss";
+import "./Login.css";
 
 const Panel = () => {
   const [container, setContainer] = useState();
