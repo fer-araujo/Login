@@ -15,7 +15,7 @@
   width: 2000px;
   top: 50%;
   right: 0%;
-  transform: translateY(5%);
+  transform: translateY(8%);
   background: linear-gradient(
     -45deg,
     rgba(247, 72, 59, 1) 40%,
@@ -62,7 +62,7 @@
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
-    margin: 15px auto;
+    margin: auto;
     cursor: pointer;
     transition: 0.5s;
 }

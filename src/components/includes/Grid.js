@@ -11,7 +11,7 @@ const Grid = () => {
 
   return (
     <div className="App__grid">
-      <h2>Registered Users</h2>
+      <h2 className="App__grid-title">Registered Users</h2>
       <div className="App__grid-container">
         <div className="App__grid-head">
           <p>User</p>

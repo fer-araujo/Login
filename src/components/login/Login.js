@@ -4,7 +4,8 @@ import { FcCheckmark, FcHighPriority } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const Register = () => {
+
+const Login = ({show}) => {
   const usernameLoginRef = useRef();
   const errorRef = useRef();
   const history = useNavigate();
@@ -162,9 +163,13 @@ const Register = () => {
         >
           Login
         </button>
+
+        <p className="App__form-forgot" onClick={show}>
+          Forgot your password?
+        </p>
       </form>
     </>
   );
 };
 
-export default Register;
+export default Login;

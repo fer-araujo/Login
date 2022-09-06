@@ -208,7 +208,7 @@ const Register = () => {
           id="name"
           className="App__form-input"
           onChange={(e) => setName(e.target.value)}
-          aria-invalid={usernameValidation ? "false" : "true"}
+          aria-invalid={nameValidation ? "false" : "true"}
           aria-describedby="namenote"
           onFocus={() => setNameFocus(true)}
           onBlur={() => setNameFocus(false)}
