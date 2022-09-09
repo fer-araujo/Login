@@ -1,0 +1,98 @@
+.App__grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 2rem 3rem;
+  z-index: 7;
+}
+
+.App__grid-container {
+  width: 100%;
+  height: 100%;
+  margin: 1rem 0;
+  padding: 2rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.App__grid-title {
+  margin: 1.25rem 0;
+}
+
+.App__grid-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.App__grid-head p {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 1rem;
+  width: 16%;
+}
+
+.App__grid-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+}
+
+.App__grid-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  /* margin: 1rem 0; */
+}
+
+.App__grid-row p {
+  margin: 0 1rem;
+  width: 16%;
+  font-weight: 400;
+  font-size: 0.825rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 570px) {
+  .App__grid {
+    width: 100%;
+    padding: 0 0.25rem;
+  }
+
+  .App__grid-container {
+    width: 100%;
+    padding: 2rem 0;
+  }
+
+  .App__grid-head p {
+    font-size: 0.825rem;
+  }
+
+  .App__grid-row p {
+    font-size: 0.625rem;
+    overflow: visible;
+  }
+
+  .App__grid-row p.App__grid-email {
+    /* max-width: 10ch; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
