@@ -1,0 +1,432 @@
+.App__dark {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #484b56;
+}
+
+.App__light {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #aaa;
+}
+
+.App__container {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 800px;
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.App__container:before {
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 800px;
+  height: 100%;
+  content: "";
+  border-radius: 20px;
+  background-image: linear-gradient(
+      -41deg,
+      rgba(39, 42, 55, 0.99) 50%,
+      rgba(39, 42, 55, 0.4825) 100%
+    ),
+    url("../Assets/buildings-1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: background-image 0.2s ease-in-out;
+  transition: background-image 0.2s ease-in-out;
+}
+
+.App__forms-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.App__forms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  transition: all 0.2s 0.9s;
+  overflow: hidden;
+  z-index: 6;
+}
+
+.App__login-container-dark,
+.App__login-container-light {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.App__login-container-dark .App__login-title,
+.App__login-container-light .App__login-title,
+.App__register-container-dark .App__register-title,
+.App__register-container-light .App__register-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.App__register-container-dark,
+.App__register-container-light {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease-out;
+}
+
+.App__login-container-dark .App__form-label,
+.App__register-container-dark .App__form-label,
+.App__login-container-light .App__form-label,
+.App__register-container-light .App__form-label {
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px;
+  color: #fff;
+}
+
+input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: #333;
+}
+input::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.App__form-input {
+  max-width: 365px;
+  width: 100%;
+  background-color: #fff;
+  margin: 4px 0;
+  height: 45px;
+  border-radius: 8px;
+  padding: 0 0.4rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.App__login-forgot {
+  background: none;
+  border: none;
+  margin: 0.425rem 0;
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+}
+
+.App__login-button,
+.App__register-button {
+  width: 100px;
+  background-color: #ee564b;
+  border: none;
+  outline: none;
+  max-height: 35px;
+  height: 35px;
+  border-radius: 8px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.725rem;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.App__login-button:hover,
+.App__register-button:hover {
+  background-color: #ee3124;
+}
+
+.App__login-container-dark .App_success,
+.App__register-container-dark .App_success,
+.App__login-container-light .App_success,
+.App__register-container-light .App_success {
+  font-weight: 500;
+  font-size: 0.925rem;
+  color: #fff;
+}
+
+.App__login-container-dark .App__failure p,
+.App__register-container-dark .App__failure p,
+.App__login-container-light .App__failure p,
+.App__register-container-light .App__failure p {
+  font-weight: 500;
+  font-size: 0.825rem;
+  color: #f7bbb7;
+}
+
+.App__panels-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+}
+
+.App__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 6;
+}
+
+.App__left-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
+  padding: 0 0 0 2rem;
+  transition: opacity 1s linear 0.3s;
+}
+
+.App__right-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  padding: 0 3rem 0 0;
+}
+
+.App__panel-content {
+  width: 100%;
+  color: #fff;
+  transition: transform 0.7s ease-in-out;
+  transition-delay: 0.1s;
+}
+
+.App__left-panel .App__panel-content p {
+  width: 100%;
+  font-size: 1.25rem;
+  padding: 1.8rem 0;
+}
+
+.App__right-panel .App__panel-content p {
+  width: 100%;
+  text-align: center;
+  font-size: 1.25rem;
+  padding: 1.8rem 0;
+}
+
+.App__panel h3 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 2.5rem;
+}
+
+.App__panel-button {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 110px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.App__panel-button:hover {
+  color: #ee3124;
+  background-color: #fff;
+}
+
+.App__right-panel .App__panel-content {
+  transform: translateX(1000px);
+}
+
+.App__container.App__forms-transition:before {
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 800px;
+  height: 100%;
+  content: "";
+  border-radius: 20px;
+  background-image: linear-gradient(
+      41deg,
+      rgba(39, 42, 55, 0.99) 50%,
+      rgba(39, 42, 55, 0.4825) 100%
+    ),
+    url("../Assets/buildings-1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.App__container.App__forms-transition .App__right-panel {
+  opacity: 1;
+  transition: opacity 0.3s linear 0.5s;
+}
+
+.App__container.App__forms-transition .App__left-panel {
+  opacity: 0;
+  transition: opacity 0.1s linear;
+}
+.App__container.App__forms-transition .App__right-panel .App__panel-content,
+.App__container.App__forms-transition .App__left-panel .App__panel-content {
+  transform: translateX(-1000px);
+}
+
+.App__container.App__forms-transition .App__register-container-dark,
+.App__container.App__forms-transition .App__register-container-light {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  z-index: 1;
+}
+.App__container.App__forms-transition .App__login-container-dark,
+.App__container.App__forms-transition .App__login-container-light {
+  opacity: 1;
+  transition: opacity 0.3s linear 0.25s;
+  z-index: 1;
+}
+.App__container.App__forms-transition .App__right-panel .App__panel-image,
+.App__container.App__forms-transition .App__right-panel .App__panel-content {
+  transform: translateX(0%);
+}
+.App__container.App__forms-transition .App__left-panel {
+  pointer-events: none;
+}
+.App__container.App__forms-transition .App__right-panel {
+  pointer-events: all;
+}
+
+.App__btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 5%;
+  left: 0;
+  z-index: 10;
+}
+.App__theme-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.725rem;
+  color: #fff;
+  z-index: 10;
+}
+
+@media screen and (max-width: 540px) {
+  .App__container,
+  .App__container:before,
+  .App__container.App__forms-transition:before {
+    max-height: 100%;
+    border-radius: 0;
+  }
+
+  .App__forms,
+  .App__panels-container {
+    flex-direction: column;
+  }
+
+  .App__login-container-dark,
+  .App__login-container-light {
+    margin: 5rem 0;
+  }
+
+  .App__register-container-dark .App__register-title,
+  .App__login-container-dark .App__login-title,
+  .App__panel-content h3 {
+    font-size: 1.825rem;
+  }
+
+  .App__left-panel {
+    padding: 0;
+    margin: 5rem 0;
+  }
+
+  .App__right-panel {
+    padding: 0;
+    margin: 10rem 0;
+    transform: translateY(60%);
+    transition: transform 0.7s ease-in-out;
+  }
+
+  .App__left-panel .App__panel-content p,
+  .App__right-panel .App__panel-content p {
+    font-size: 1.15rem;
+  }
+
+  .App__btn-container {
+    top: 2%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .App__left-panel {
+    padding: 0 2rem 0 0;
+  }
+
+  .App__register-container-dark .App__register-title,
+  .App__login-container-dark .App__login-title,
+  .App__panel-content h3 {
+    font-size: 2rem;
+  }
+
+  .App__left-panel .App__panel-content p,
+  .App__right-panel .App__panel-content p {
+    font-size: 1.15rem;
+  }
+}

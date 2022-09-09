@@ -1,21 +1,27 @@
-import './App.css';
+import { ThemeProvider } from "./Components/Helpers/ThemeContext";
+import Panel from "./Components/Login/Panel";
+import Recover from "./Components/Login/Recover";
+import Home from "./Components/Home/Home";
+import Error from "./Components/Error/Error";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h3>Hello there #FutureShaper...</h3>
-        <p>
-          This is a simple React app that will be used to asses your skills.
-        </p>
-        <p>
-          Please follow the instructions in the README.md file to get started.
-        </p>
-        <p>
-          Edit <code>src/App.js</code> and show me what you got!
-        </p>
-      </header>
-    </div>
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Panel />} />
+            <Route path="/login" element={<Panel />} />
+            <Route path="/register" element={<Panel />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/recover" element={<Recover />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

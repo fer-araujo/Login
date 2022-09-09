@@ -1,0 +1,121 @@
+.App__home-dark {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #484b56;
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.App__home-light {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #eee;
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.App__home-dark:before {
+  content: "";
+  position: absolute;
+  height: 2000px;
+  width: 2000px;
+  top: 50%;
+  right: 0%;
+  transform: translateY(8%);
+  background: rgb(181, 38, 28);
+  background: linear-gradient(
+    41deg,
+    rgba(181, 38, 28, 0.9248074229691877) 40%,
+    rgba(212, 62, 51, 0.8911939775910365) 90%
+  );
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.App__home-light:before {
+  content: "";
+  position: absolute;
+  height: 2000px;
+  width: 2000px;
+  top: 50%;
+  right: 0%;
+  transform: translateY(8%);
+  background: rgb(181, 38, 28);
+  background: linear-gradient(
+    41deg,
+    rgba(181, 38, 28, 0.9248074229691877) 40%,
+    rgba(212, 62, 51, 0.8911939775910365) 90%
+  );
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.App__home-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.App__home-top-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.App__home-dark .App__home-container h1 {
+  margin: 3rem auto;
+  color: #fff;
+}
+
+.App__home-light .App__home-container h1 {
+  margin: 3rem auto;
+  color: #000;
+}
+
+.App__home-title {
+  color: #ee564b;
+}
+
+.App__home-logout {
+  width: 90px;
+  background-color: #ee564b;
+  border: none;
+  outline: none;
+  height: 35px;
+  border-radius: 8px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: auto;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.App__home-grid {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,127 @@
+.App__modal-light .App__form-label {
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px;
+  font-weight: 600;
+  color: #000;
+}
+
+.App__modal-light .App__form-input {
+  max-width: 365px;
+  width: 100%;
+  background-color: #eee;
+  margin: 5% 0;
+  height: 35px;
+  border-radius: 8px;
+  padding: 0 0.4rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.App__modal-dark .App__form-label {
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px;
+  color: #fff;
+}
+
+.App__modal-dark .App__form-input {
+  max-width: 365px;
+  width: 100%;
+  background-color: #fff;
+  margin: 5% 0;
+  height: 35px;
+  border-radius: 8px;
+  padding: 0 0.4rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.App__forgot-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 0.225rem auto;
+}
+
+.App__button-save {
+  width: 80px;
+  background-color: #ee564b;
+  border: none;
+  outline: none;
+  max-height: 35px;
+  height: 30px;
+  border-radius: 8px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.725rem;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.App__button-save:hover {
+  background-color: #ee3124;
+}
+
+.App__modal-dark .App__button-cancel {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 80px;
+  height: 30px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.725rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.App__modal-light .App__button-cancel {
+  margin: 0;
+  background: none;
+  border: 2px solid #484b56;
+  border-radius: 10px;
+  width: 80px;
+  height: 30px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.725rem;
+  color: #484b56;
+  cursor: pointer;
+}
+
+.App__edit-buttons,
+.App__delete-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0.725rem 0;
+}
+
+.App__modal-dark .App__delete-text,
+.App__modal-dark .App__success {
+    color: #fff;
+}
+
+.App__modal-light .App__delete-text,
+.App__modal-light .App__success {
+    color: #000;
+}
+
+.App__modal-dark .App__failure {
+    color: #f7bbb7;
+}
+
+.App__modal-light .App__failure {
+    color: #484b56;
+}
+
+
