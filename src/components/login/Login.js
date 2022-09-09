@@ -1,175 +1,133 @@
-import React, { useRef, useState, useEffect } from "react";
-import { USER_REGEX, PWD_REGEX } from "../../constants/Constants";
-import { FcCheckmark, FcHighPriority } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import React, { useState, useRef } from "react";
+import { useTheme } from "../Helpers/ThemeContext";
+import Input from "../Includes/Inputs";
+import Messages from "../Includes/Messages";
+import { USER_REGEX, EMAIL_REGEX, PWD_REGEX } from "../Constants/Constants";
+import { loginUser } from "../Helpers/localStorage";
+import Modal from "../Includes/Modal";
+import { useNavigate } from "react-router";
+import Errors from "../Error/ErrorMessages";
 
-
-const Login = ({show}) => {
-  const usernameLoginRef = useRef();
-  const errorRef = useRef();
+const Register = () => {
   const history = useNavigate();
+  const { theme } = useTheme();
 
-  const [username, setUsername] = useState("");
-  const [nameValidation, setNameValidation] = useState(false);
-  const [nameFocus, setNameFocus] = useState(false);
+  const userRef = useRef();
+  const passwordRef = useRef();
 
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordValidation, setPasswordValidation] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
 
-  const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
 
-  //We will test that the username is valid
-  useEffect(() => {
-    if (USER_REGEX.test(username)) {
-      setNameValidation(true);
-      setErrorMsg("");
-    } else {
-      setNameValidation(false);
-      username !== "" ? setErrorMsg("Invalid Username") : setErrorMsg("");
+  const [show, setShow] = useState(false);
+
+  const handleInputUser = (e) => {
+    setUser(e.target.value);
+  };
+
+  const handleInputPassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleValidation = (value) => {
+    switch (value) {
+      case "user":
+        if (user.includes("@") || user.includes(".com")) {
+          return user !== "" ? EMAIL_REGEX.test(user) : true;
+        }
+        return user !== "" ? USER_REGEX.test(user) : true;
+      case "password":
+        return password !== "" ? PWD_REGEX.test(password) : true;
+      default:
+        break;
     }
-  }, [username]);
+  };
 
-  //We will test that the password is valid
-  // and that the password is equal to the match
-  useEffect(() => {
-    if (PWD_REGEX.test(password)) {
-      setPasswordValidation(true);
-      setErrorMsg("");
-    } else {
-      setPasswordValidation(false);
-      password !== "" ? setErrorMsg("Invalid Password") : setErrorMsg("");
-    }
-  }, [password]);
+  const handleForgot = () => {
+    setShow(!show);
+  };
 
-  const handleSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    const usersArr = localStorage.getItem("users");
-    if (usersArr && usersArr.length) {
-      const userData = JSON.parse(usersArr);
-      const userLogin = userData.filter((user) => {
-        return user.username === username && user.password === password;
-      });
-      if (userLogin.length > 0) {
-        localStorage.setItem("u__uuid", userLogin[0].id);
-        localStorage.setItem("u__username", userLogin[0].username);
-        localStorage.setItem("u__name", userLogin[0].name);
-        localStorage.setItem("u__email", userLogin[0].email);
-        localStorage.setItem("u__date", userLogin[0].date);
+    const userParams = { user, password };
 
-        setUsername("");
-        setPassword("");
-        history("/home");
-      } else {
-        setErrorMsg("Invalid username or password");
-
-        setTimeout(() => {
-          setUsername("");
-          setPassword("");
-        }, 2000);
-      }
+    if (loginUser(userParams)) {
+      history("/Home");
+      setMessage("Login successful");
+      setSuccess(true);
+      setShowMsg(true);
+      setUser("");
+      setPassword("");
+      setTimeout(() => {
+        setShowMsg(false);
+        setMessage("");
+      }, 3000);
     } else {
-      setErrorMsg("Invalid username or password");
+      setMessage("Your username/email or password are incorrect");
+      setSuccess(false);
+      setShowMsg(true);
 
       setTimeout(() => {
-        setUsername("");
-        setPassword("");
-      }, 2000);
+        setShowMsg(false);
+        setMessage("");
+      }, 3000);
     }
   };
 
   return (
     <>
-      <form
-        className="App__form-login"
-        onSubmit={handleSubmit}
-        autoComplete="off"
-      >
-        <h1>Login</h1>
-        <p
-          ref={errorRef}
-          className={errorMsg ? "App__error" : "App__offscreen"}
-          aria-live="assertive"
-        >
-          {errorMsg}
-        </p>
-        {/* username input*/}
-        <label htmlFor="usernameLogin" className="App__form-label">
-          Username:
-          {nameValidation ? <FcCheckmark /> : ""}
-          {nameValidation || !username ? "" : <FcHighPriority />}
-        </label>
-        <input
-          type="text"
-          id="usernameLogin"
-          ref={usernameLoginRef}
-          className="App__form-input"
-          onChange={(e) => setUsername(e.target.value)}
-          aria-invalid={nameValidation ? "false" : "true"}
-          aria-describedby="uidnote"
-          onFocus={() => setNameFocus(true)}
-          onBlur={() => setNameFocus(false)}
-          value={username ? username : ""}
-          required
-        />
-        <p
-          id="uidnote"
-          className={
-            nameFocus && username && !nameValidation
-              ? "App__instructions"
-              : "App__offscreen"
-          }
-        >
-          - Remember the username should have a minimum of 4 characters. <br />
-        </p>
+      <div className={`App__login-container-${theme}`}>
+        <form className={`App__login-form`} onSubmit={handleLoginSubmit}>
+          <h1 className={`App__login-title`}>Login</h1>
 
-        {/* password input*/}
-        <label htmlFor="passwordLogin" className="App__form-label">
-          Password:
-          {passwordValidation ? <FcCheckmark /> : ""}
-          {passwordValidation || !password ? "" : <FcHighPriority />}
-        </label>
-        <input
-          type="password"
-          id="passwordLogin"
-          className="App__form-input"
-          onChange={(e) => setPassword(e.target.value)}
-          aria-invalid={passwordValidation ? "false" : "true"}
-          aria-describedby="pwdnote"
-          onFocus={() => setPasswordFocus(true)}
-          onBlur={() => setPasswordFocus(false)}
-          value={password ? password : ""}
-          required
-        />
-        <p
-          id="pwdnote"
-          className={
-            passwordFocus && password && !passwordValidation
-              ? "App__instructions"
-              : "App__offscreen"
-          }
-        >
-          - Remember the password should have a minimum of 8 characters. <br />
-          - Have at least one capital letter. <br />
-          - Have at least one lowercase letter. <br />
-          - Have at least one number. <br />- Have at least one special
-          character.
-        </p>
+          <Input
+            type="text"
+            label="User"
+            id="user"
+            refer={userRef}
+            value={user}
+            placeholder="Enter your username or email address"
+            handleChange={handleInputUser}
+            handleBlurOut={handleValidation("user")}
+            message={<Errors type="User" />}
+          />
 
-        <button
-          className="App__form-button"
-          disabled={!nameValidation || !passwordValidation ? true : false}
-        >
-          Login
-        </button>
-
-        <p className="App__form-forgot" onClick={show}>
-          Forgot your password?
-        </p>
-      </form>
+          <Input
+            type="password"
+            label="Password"
+            id="passwordLogin"
+            refer={passwordRef}
+            value={password}
+            placeholder="Enter your password"
+            handleChange={handleInputPassword}
+            handleBlurOut={handleValidation("password")}
+            message={<Errors type="Password" />}
+          />
+          <button
+            type="button"
+            className={`App__login-forgot`}
+            onClick={handleForgot}
+          >
+            Forgot your password?
+          </button>
+          <button type="submit" className={`App__login-button`}>
+            Login
+          </button>
+          <Messages show={showMsg} success={success} message={message} />
+        </form>
+      </div>
+      <Modal
+        close={() => {
+          setShow(false);
+        }}
+        show={show}
+        type="Forgot"
+      />
     </>
   );
 };
 
-export default Login;
+export default Register;
