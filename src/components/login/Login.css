@@ -186,10 +186,10 @@ input::placeholder {
   background-color: #ee3124;
 }
 
-.App__login-container-dark .App_success,
-.App__register-container-dark .App_success,
-.App__login-container-light .App_success,
-.App__register-container-light .App_success {
+.App__login-container-dark .App__success,
+.App__register-container-dark .App__success,
+.App__login-container-light .App__success,
+.App__register-container-light .App__success {
   font-weight: 500;
   font-size: 0.925rem;
   color: #fff;
